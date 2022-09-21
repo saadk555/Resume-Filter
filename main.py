@@ -1,15 +1,17 @@
+from audioop import reverse
 import ocr
 import glob
 import os
 import platform
 from pathlib import Path
+import shutil
 
 import pytesseract
 from pdf2image import convert_from_path
 from PIL import Image
 import re
 
-
+all_files = []
 
 if platform.system() == "Windows":
 	# We may need to do some additional downloading and setup...
@@ -43,9 +45,46 @@ for file in path:
     PDF_file = Path(fr"{file}")
     print(PDF_file)
     ocr.main(list_compare,find_word,PDF_file)
+    all_files.append(file)
 
 
+print(all_files)
+'''
+name = os.path.split(file)
+basename.append(name[1])
+'''
 print(list_compare)
+
+tup1 = zip(list_compare,all_files)
+
+print(tup1)
+
+tup2 = sorted(tup1, key=lambda x: (-x[0], x[1]))
+
+print(tup2)
+
+
+newpath = r"D:\python_workspaces\cv-man\new\\"
+
+if not os.path.exists(newpath):
+    os.makedirs(newpath)
+
+increment = 0
+
+for i,j in tup2:
+    print(j)
+    name = os.path.split(j)
+    basename = name[1]
+    #pathname = name[0]
+    fn = "{}"
+    increment += 1
+    fn = fn.format(increment)
+    target = str(newpath) + str(f"{fn}") + str("_") + str(basename)
+    print(target)
+    shutil.copyfile(j, target)
+
+
+
 
 
 
