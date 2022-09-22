@@ -14,24 +14,22 @@ import re
 all_files = []
 
 if platform.system() == "Windows":
-	# We may need to do some additional downloading and setup...
-	# Windows needs a PyTesseract Download
-	# https://github.com/UB-Mannheim/tesseract/wiki/Downloading-Tesseract-OCR-Engine
 
 	pytesseract.pytesseract.tesseract_cmd = (r"D:\\Tesseract-OCR\\tesseract.exe")
 
 
-path_to_poppler_exe = Path(r"C:\\Program Files\\poppler-0.68.0\bin")
+pe_path = Path(r"C:\\Program Files\\poppler-0.68.0\bin")
 		
 find_word = ''
 
 inpath = input('Please enter the file path:  ')
+inpath = inpath + str('*.pdf') 
 
 list_compare = []
 
 words = int(input('How many words you want to find: '))
 
-path = glob.glob('D:\python_workspaces\cv-man\*.pdf')
+path = glob.glob(inpath)
 
 for num in range(words):
 
@@ -48,21 +46,11 @@ for file in path:
     all_files.append(file)
 
 
-print(all_files)
-'''
-name = os.path.split(file)
-basename.append(name[1])
-'''
 print(list_compare)
 
 tup1 = zip(list_compare,all_files)
 
-print(tup1)
-
 tup2 = sorted(tup1, key=lambda x: (-x[0], x[1]))
-
-print(tup2)
-
 
 newpath = r"D:\python_workspaces\cv-man\new\\"
 
@@ -72,15 +60,12 @@ if not os.path.exists(newpath):
 increment = 0
 
 for i,j in tup2:
-    print(j)
     name = os.path.split(j)
     basename = name[1]
-    #pathname = name[0]
     fn = "{}"
     increment += 1
     fn = fn.format(increment)
     target = str(newpath) + str(f"{fn}") + str("_") + str(basename)
-    print(target)
     shutil.copyfile(j, target)
 
 
@@ -90,15 +75,3 @@ for i,j in tup2:
 
 
 
-
-
-
-'''
-files = [f for f in glob.glob("*.txt")]
-
-for fi, f in enumerate(files):
-    print(fi, f)
-
-query = input("Please add your selection: ") # just the number
-df = pd.read_csv(files[int(query)])
-'''
