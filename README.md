@@ -23,7 +23,7 @@ pdf2image 1.16.0
 Pillow 9.2.0
 `pip install Pillow`
 
-Libraries and their uses are covered by their respective licenses in [Libraries](https://github.com/saadk555/cv-man/tree/main/Libraries) directory 
+Libraries and their uses are covered by their respective licenses in [Libraries](https://github.com/saadk555/cv-man/tree/master/Libraries) directory 
 
 ----------------------------------------------------
 
