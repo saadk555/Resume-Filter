@@ -9,7 +9,7 @@ Once the comparison is done, It create folder `/new/` in the same given path and
 
 
 ----------------------------------------------------
-Libraries used in this project 
+External Libraries used in this project 
 
 
 pytesseract 0.3.10
@@ -27,7 +27,9 @@ Libraries and their uses are covered by their respective licenses in [Libraries]
 
 ----------------------------------------------------
 
-Feel free to contribute and improve it. Any contribution would be highly appreciated.
+Feel free to contribute and improve it.
+
+Any contribution would be highly appreciated.
 
 ----------------------------------------------------
 
