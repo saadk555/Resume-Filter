@@ -1,11 +1,17 @@
 CV-MAN
 --------
 
-This is a python based program that filter the potential resumes/CVs by filtering them based on the amount of  mutiple given keywords they have, using OCR tesseract.
+#  Flask-based version of CV-MAN which can be deployed over web
 
-It first takes path as input where pdf files are stored and then read all Resumes/CVs in it, checking which one has the most highest amount of given targeted words in them.
 
-Once the comparison is done, It create folder `/new/` in the same given path and list all pdf with numbers in their name where the one that has most amount of words in the top `1_file.pdf` and secondone in the second positions and so on.
+- Upload all the resumes and enter amount of words you'd like to find
+
+- Enter words one by one on next page
+
+- wait for the result page download your result in zip
+
+
+For more information, please refer back to the MASTER branch's readme file
 
 
 ----------------------------------------------------
