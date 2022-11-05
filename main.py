@@ -5,15 +5,12 @@ import os
 import platform
 from pathlib import Path
 import shutil
-import app
-
 import pytesseract
 from pdf2image import convert_from_path
 from PIL import Image
-import re
 
 
-def mainf():
+def mainf(keyword):
 
     all_files = []
 
@@ -33,9 +30,11 @@ def mainf():
 
     path = glob.glob(inpath)
 
-    for word in app.keyword:
+    for word in keyword:
 
-        find_word += "\\b" + word + "\\b" + '|'
+        find_word += "\\b" + str(word) + "\\b" + '|'
+
+
         
     find_word = find_word[:-1]
 
