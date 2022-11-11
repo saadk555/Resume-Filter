@@ -4,6 +4,8 @@ from glob import glob
 import os
 from io import BytesIO
 from zipfile import ZipFile
+from flask import after_this_request
+import io
 
 
 
@@ -20,6 +22,8 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 keyword = []
 
+
+
 @app.route('/')  
 def index(): 
     return render_template("index.html")  
@@ -35,50 +39,41 @@ def success():
 
 
 
-
-@app.route('/submitted', methods = ['POST'])  
+@app.route('/submitted', methods = ['POST']) 
 def submitted():
     from main import mainf  
     if request.method == 'POST':
         keyword.append(request.form.getlist('kw'))
         mainf(keyword)
         re = r'D:\xamppnew\htdocs\cv-man\result\\'
-        #stream = BytesIO()
         with ZipFile(r"D:\xamppnew\htdocs\cv-man\result\result.zip", 'w') as zip:
             for file in glob(os.path.join(re, '*.pdf')):
                 zip.write(file, os.path.basename(file))
-        #stream.seek(0)
-        @after_this_request
-        def remove_file(response):
-            file_path = r'D:\xamppnew\htdocs\cv-man\result\*.pdf'
-            try:
-                os.remove(file_path)
-            except Exception as error:
-                app.logger.error("Error removing or closing downloaded file handle", error)
-            return response
         return render_template("result.html")
 
-        return send_file(
-            stream,
-            as_attachment=True,
-            download_name='archive.zip')
 
 
 @app.route('/result', methods = ['GET']) 
-def result():
-    @after_this_request
-    def remove_file(response):
-        file_path = r'D:\xamppnew\htdocs\cv-man\result\result.zip'
-        try:
-            os.remove(file_path)
-        except Exception as error:
-            app.logger.error("Error removing or closing downloaded file handle", error)
-        return response
+def result(): 
+    zipfile = glob(r"D:\xamppnew\htdocs\cv-man\result\*")
+    fname = glob(r"D:\xamppnew\htdocs\cv-man\UPLOAD_FOLDER\*.pdf")
+    file_path = r"D:\xamppnew\htdocs\cv-man\result\result.zip"
+    rd = io.BytesIO()
     if request.method == 'GET':
-        download = r"D:\xamppnew\htdocs\cv-man\result\result.zip"
-        return send_file(download, as_attachment=True)
-
-    
+        with open(file_path, 'rb') as fo:
+            rd.write(fo.read())
+        rd.seek(0)
+#for loops to remove ramining files
+        os.remove(file_path)
+        for i in fname: 
+            if os.path.isfile(i):
+                os.remove(i)
+        for k in zipfile: 
+            if os.path.isfile(k):
+                os.remove(k)      
+        #This sends the data stored in buffer to the user
+        return send_file(rd, mimetype='application/zip',
+                     download_name='result.zip')
 
 
 if __name__ == '__main__':  
